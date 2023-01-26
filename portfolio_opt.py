@@ -61,6 +61,11 @@ def run_simulation(num_sims: int) -> None:
     stock_daily_ret = stocks.pct_change(1)
     log_ret = np.log(stocks/stocks.shift(1))
 
+    # st.subheader('Fundamentals')
+    # for ticker in products.split():
+    #     t = yf.Ticker(ticker)
+    #     st.write(t.info)
+
     st.subheader('Daily Returns Statitics')
     st.write(stock_daily_ret.describe().T)
 
@@ -77,9 +82,6 @@ def run_simulation(num_sims: int) -> None:
     vol_arr = np.zeros(num_sims)
     sharpe_arr = np.zeros(num_sims)
 
-    # with st.spinner('Running simulations!'):
-    #     pass
-
     st.write("---")
     container1 = st.empty()
     container2 = st.empty()
@@ -87,7 +89,6 @@ def run_simulation(num_sims: int) -> None:
         weights = np.array(np.random.random(stocks.shape[1])) # Create Random Weights
         weights = weights / np.sum(weights)
         all_weights[ind,:] = weights
-
         ret_arr[ind] = np.sum((log_ret.mean() * weights) *252)
         vol_arr[ind] = np.sqrt(np.dot(weights.T, np.dot(log_ret.cov() * 252, weights)))
         sharpe_arr[ind] = ret_arr[ind]/vol_arr[ind]
