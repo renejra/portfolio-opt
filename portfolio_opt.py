@@ -44,42 +44,24 @@ with col2:
 
 if col2.button('Run portfolio optimization!'):
     st.write('---')
-    st.subheader('Results')
-
     data = yf.download(products, start=start_date, end=end_date)
     stocks = data.Close
     mean_daily_ret = stocks.pct_change(1).mean()
     stock_normed = stocks/stocks.iloc[0]
 
-    st.subheader('Individual performance compared')
-    st.write('Below are the normalized graphs for your selected tickers.')
+    st.subheader("Asset performance compared")
     st.line_chart(stock_normed)
+    
     stock_daily_ret = stocks.pct_change(1)
     log_ret = np.log(stocks/stocks.shift(1))
 
-    st.subheader('Statistics')
-    st.write(log_ret.describe())
-    
-    print('Stocks')
-    print(stocks.columns)
-    print('\n')
+    st.subheader('Daily Returns Statitics')
+    st.write(log_ret.T.describe())
 
-    print('Creating Random Weights')
     weights = np.array(np.random.random(stocks.shape[1]))
-    print(weights)
-    print('\n')
-
-    print('Rebalance to sum to 1.0')
     weights = weights / np.sum(weights)
-
-    print('Expected Portfolio Return')
     exp_ret = np.sum(log_ret.mean() * weights) *252
-
-    print('Expected Volatility')
     exp_vol = np.sqrt(np.dot(weights.T, np.dot(log_ret.cov() * 252, weights)))
-    print(exp_vol)
-    print('\n')
-
     all_weights = np.zeros((num_ports,len(stocks.columns)))
     ret_arr = np.zeros(num_ports)
     vol_arr = np.zeros(num_ports)
@@ -111,8 +93,8 @@ if col2.button('Run portfolio optimization!'):
 
     st.write(
         """
-        **Disclaimer:** You are sole responsible for your investment decisions. This tool is educational,
-        this is **not financial advise, always should do your own research before investing**. Author is not responsible for the
-        outcomes of your own investment decisions!
+        **Disclaimer:** **Not financial advise, always should do your own research before investing**. 
+        By using this app, you acknowledge that you are sole responsible for your own investment decisions. 
+        and therefore, the author can't be made responsible for their outcomes.
         """
     )
