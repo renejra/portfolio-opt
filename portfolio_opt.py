@@ -10,7 +10,7 @@ st.header('portfolio-opt')
 st.subheader('An app for portfolio optimization')
 st.write(
     """
-    A Python application to help portfolio managers optimize their asset mix built on top of streamlit and yfinance.
+    A Python application to help portfolio managers optimize their asset mix, built on top of streamlit and yfinance.
 
     Modern Portfolio Theory suggests that investors should diversify by 
     investing in a range of different assets in order to reduce the overall portfolio risk.
@@ -30,7 +30,12 @@ st.write(
 )
 st.subheader('Get Started')
 st.write('Pass a list of symbols and a number of experiments to start. You need to look for the tickers in https://finance.yahoo.com/')
-products = st.text_input("Enter symbols to look for (f.e.): `okta msft ^gspc imkta ^ixic gold si=f dax aapl goog`", value="amzn aapl goog")
+st.write("""
+        Known limitations include:
+            - BTC, crypto and traditional instruments don't go well together, since BTC / crypto is open 24/7 every day.
+            Additional functionality might come in the future.
+        """)
+products = st.text_input("Enter tickers to look for, like `okta msft ^gspc imkta ^ixic gold si=f dax aapl goog`", value="amzn aapl goog")
 
 col1, col2 = st.columns(2)
 with col1:
@@ -76,18 +81,19 @@ def run_simulation(num_sims: int) -> None:
     #     pass
 
     st.write("---")
-    with st.empty():
-        for ind in range(num_sims):
-            # st.progress(ind/num_sims)
-            weights = np.array(np.random.random(stocks.shape[1])) # Create Random Weights
-            weights = weights / np.sum(weights)
-            all_weights[ind,:] = weights
+    container1 = st.empty()
+    container2 = st.empty()
+    for ind in range(num_sims):
+        weights = np.array(np.random.random(stocks.shape[1])) # Create Random Weights
+        weights = weights / np.sum(weights)
+        all_weights[ind,:] = weights
 
-            ret_arr[ind] = np.sum((log_ret.mean() * weights) *252)
-            vol_arr[ind] = np.sqrt(np.dot(weights.T, np.dot(log_ret.cov() * 252, weights)))
-            sharpe_arr[ind] = ret_arr[ind]/vol_arr[ind]
-            st.write(f'**Running simulation** ... {round(ind*100/num_sims)} % complete')
-        st.balloons()
+        ret_arr[ind] = np.sum((log_ret.mean() * weights) *252)
+        vol_arr[ind] = np.sqrt(np.dot(weights.T, np.dot(log_ret.cov() * 252, weights)))
+        sharpe_arr[ind] = ret_arr[ind]/vol_arr[ind]
+        container1.write(f'**Running simulation** ... {round(ind*100/num_sims)} % complete')
+        container2.progress((ind+1)/num_sims)
+    st.balloons()
 
     weights_df = pd.DataFrame(all_weights, columns = stocks.columns)
     results = pd.concat([(weights_df*100).round(2), pd.Series(vol_arr, name='volatility'), pd.Series(ret_arr, name='returns')], axis=1)
