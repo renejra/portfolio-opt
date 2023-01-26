@@ -98,22 +98,21 @@ if col2.button('Run portfolio optimization!'):
     results = pd.concat([(weights_df*100).round(2), pd.Series(vol_arr, name='volatility'), pd.Series(ret_arr, name='returns')], axis=1)
     results['sharpe_ratio'] = results.returns/results.volatility
 
-    # Plotly Chart!
     st.subheader('Pick the best mix for your risk apetite')
     st.write("""
-    This is the core result of this application. The idea is that you find a mix of the stocks you picked,
-    which gives you the most returns (Y axis) for a volatility (X axis) that you as an investor feel comfortable with.
+            This is the core result of this application. The idea is that you find a mix of the stocks you picked,
+            which gives you the most returns (Y axis) for a volatility (X axis) that you as an investor feel comfortable with.
 
-    For example, in case you feel alright with a 20% volatility (X=0.2) in your portfolio, you shoud pick the mix on the
-    top return(maximum Y). This would give you a mix with the most expected returns, for the expected volatility you're aiming for. 
-    """)
+            For example, in case you feel alright with a 20% volatility (X=0.2) in your portfolio, you shoud pick the mix on the
+            top return(maximum Y). This would give you a mix with the most expected returns, for the expected volatility you're aiming for. 
+            """)
     fig = px.scatter(results, x='volatility', y='returns', color='sharpe_ratio', hover_data=stocks.columns)
     st.plotly_chart(fig)
 
     st.write(
         """
-        **Disclaimer:** This app is intended for educational purposes, as **this is not financial advise, 
-        you should do your own research before investing**. Author will not be responsible for the
-        outcomes of your own investment decisions.
+        **Disclaimer:** You are sole responsible for your investment decisions. This tool is educational,
+        this is **not financial advise, always should do your own research before investing**. Author is not responsible for the
+        outcomes of your own investment decisions!
         """
     )
