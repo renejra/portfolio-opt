@@ -57,6 +57,7 @@ if col2.button('Run portfolio optimization!'):
 
     st.subheader('Daily Returns Statitics')
     st.write(stock_daily_ret.describe().T)
+    st.bar_graph(stock_daily_ret)
 
     weights = np.array(np.random.random(stocks.shape[1]))
     weights = weights / np.sum(weights)
