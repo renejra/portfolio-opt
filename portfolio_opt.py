@@ -129,9 +129,7 @@ if col2.button('Run portfolio optimization!'):
     st.write(
         """
         **Disclaimer:** This app is intended for educational purposes, as **this is not financial advise, 
-        you should do your own research before investing**. Authors will not be responsible for the
+        you should do your own research before investing**. Author will not be responsible for the
         outcomes of your own investment decisions.
-
-        **Author:** René J. Rivero A.
         """
     )
