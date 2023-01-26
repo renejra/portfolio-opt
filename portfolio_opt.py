@@ -41,7 +41,7 @@ with col2:
     end_date = col2.text_input("Enter an end date: (YYYY-MM-DD)", value="2023-01-31")
     st.write(" ")
     st.write(" ")
-    sd = st.number_input('Seed: ', 001, 999, value=101)
+    sd = st.number_input('Seed: ', 1, 999, value=101)
     np.random.seed(sd)
 
 if col2.button('Run portfolio optimization!'):
