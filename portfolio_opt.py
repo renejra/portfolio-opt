@@ -56,7 +56,7 @@ if col2.button('Run portfolio optimization!'):
     log_ret = np.log(stocks/stocks.shift(1))
 
     st.subheader('Daily Returns Statitics')
-    st.write(log_ret.T.describe())
+    st.write(stock_daily_ret.describe().T)
 
     weights = np.array(np.random.random(stocks.shape[1]))
     weights = weights / np.sum(weights)
