@@ -49,7 +49,7 @@ if col2.button('Run portfolio optimization!'):
     mean_daily_ret = stocks.pct_change(1).mean()
     stock_normed = stocks/stocks.iloc[0]
 
-    st.subheader("Asset performance compared")
+    st.subheader("Normalized performance compared")
     st.line_chart(stock_normed)
     
     stock_daily_ret = stocks.pct_change(1)
