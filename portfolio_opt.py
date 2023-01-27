@@ -32,6 +32,7 @@ st.subheader('Get Started')
 st.write('Pass a list of symbols and a number of experiments to start. You need to look for the tickers in https://finance.yahoo.com/')
 st.write("""
         Known limitations include:
+        
             - BTC, crypto and traditional instruments don't go well together, since BTC / crypto is open 24/7 every day.
             Additional functionality might come in the future.
         """)
