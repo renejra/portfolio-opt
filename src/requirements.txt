@@ -1,4 +1,6 @@
-numpy
+altair
 pandas
+streamlit
+numpy
 yfinance
 plotly-express

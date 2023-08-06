@@ -1,0 +1,33 @@
+api-version: 2019-12-01
+location: westeurope
+name: portfolio-opt
+properties:
+  containers:
+  - name: portfolio-opt
+    properties:
+      image: acrmestilawebapps.azurecr.io/portfolio-opt:latest
+      ports:
+      - port: 80
+        protocol: TCP
+      - port: 443
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 2.0
+          memoryInGB: 1.5
+  imageRegistryCredentials:
+  - server: acrmestilawebapps.azurecr.io
+    username: acrmestilawebapps
+    password: msaauPxKy5GkTBK0K0DNG4P/6w9LI0LedXl4UlULea+ACRDaaIaC
+  restartPolicy: Never
+  ipAddress:
+    ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+    type: Public
+    dnsNameLabel: portfolio-opt
+  osType: Linux
+tags: null
+type: Microsoft.ContainerInstance/containerGroups

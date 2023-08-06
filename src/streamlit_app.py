@@ -1,4 +1,3 @@
-
 import numpy as np
 import pandas as pd
 import yfinance as yf
@@ -70,7 +69,7 @@ def run_simulation(num_sims: int) -> None:
     st.write(stock_daily_ret.describe().T)
 
     for symbol in stock_daily_ret.columns:
-        hist = px.histogram(stock_daily_ret, x=symbol)
+        hist = px.histogram(stock_daily_ret, x=symbol, width=600, height=400)
         st.plotly_chart(hist)
 
     weights = np.array(np.random.random(stocks.shape[1]))
